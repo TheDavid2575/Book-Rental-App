@@ -1,0 +1,25 @@
+body {
+  min-width: 500px;
+  width: 900px;
+  padding: 20px 30px 0px 30px;
+
+  font-family: "Questrial", sans-serif;
+}
+
+#cart {
+  width: 550px;
+}
+
+h1 {
+  font-family: "Secular One", sans-serif;
+}
+
+label {
+  margin: 10px 0px 0px 0px;
+}
+
+.inp {
+  background-color: rgb(203, 228, 255);
+  border-radius: 5px;
+  border-color: black;
+}
