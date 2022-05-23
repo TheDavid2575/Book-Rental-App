@@ -8,6 +8,7 @@ body {
 
 #cart {
   width: 550px;
+  min-height: 300px;
 }
 
 h1 {
@@ -22,4 +23,20 @@ label {
   background-color: rgb(203, 228, 255);
   border-radius: 5px;
   border-color: black;
+}
+
+.warning {
+  width: 550px;
+  color: red;
+  padding: 5px;
+  border-radius: 10px;
+  margin: 10px 0px 0px 0px;
+}
+
+.success {
+  width: 550px;
+  color: green;
+  padding: 5px;
+  border-radius: 10px;
+  margin: 10px 0px 0px 0px;
 }

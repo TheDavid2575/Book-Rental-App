@@ -1,23 +1,3 @@
-// // New Book Object
-// function Book(title, author, isbn) {
-//   this.title = title;
-//   this.author = author;
-//   this.isbn = isbn;
-// }
-
-// // Jquery
-// $(document).ready(function () {
-//   let book, titleInp, authorInp, isbnInp, formSubmitBtn;
-
-//   $("p").click(function () {
-//     (titleInp = $("#title").val()),
-//       (authorInp = $("#author").val()),
-//       (isbnInp = $("#isbnum").val()),
-//       (formSubmitBtn = $("#formSubmitBtn"));
-//     // return new Book(titleInp, authorInp, isbnInp);
-//   });
-// });
-
 // Book Class
 function Book(title, author, isbn) {
   this.title = title;
@@ -60,12 +40,28 @@ function addBookToLocalStorage(book) {
   books.push({ ...book });
 }
 
+// Removing Row & book from storage
 function removeRow(isbn) {
   // Remove from table
   document.getElementById(`${isbn}`).parentElement.parentElement.remove();
 
   // Remove from local storage
   books.splice(books.indexOf(isbn), 1);
+
+  // Check if table is empty
+  if (books.length === 0) {
+    // document.getElementById("bookTable").style.scale = 0.01;
+
+    let emptyCart = document.createElement("p");
+    emptyCart.innerHTML = "No books in shoping cart";
+
+    let emptyCartIcon = document.createElement("h");
+    emptyCartIcon.classList.add("bi-cart");
+    emptyCartIcon.style.fontSize = "50px";
+
+    document.getElementById("cart").appendChild(emptyCartIcon);
+    document.getElementById("cart").appendChild(emptyCart);
+  }
 }
 
 // Automatically add items in local storage to table
@@ -78,10 +74,37 @@ function removeRow(isbn) {
   }
 })();
 
+// Input Error
+function confirmation(bool) {
+  let err = document.createElement("p");
+
+  err.innerHTML = bool
+    ? "✅ Book has been added"
+    : "⚠️ Please make sure all fields are filled in";
+
+  err.classList.add(bool ? "success" : "warning");
+
+  document.getElementById("description").appendChild(err);
+
+  setTimeout(() => {
+    err.remove();
+  }, 7000);
+}
+
 // Obtain values from input
 document.getElementById("addBookForm").addEventListener("submit", function (e) {
   // Preventing the default parameter submit action (Preventing the console reloads)
   e.preventDefault();
+
+  // Raising error if any input are empty
+  if (
+    document.getElementById("title").value == "" ||
+    document.getElementById("author").value == "" ||
+    document.getElementById("isbn").value == ""
+  ) {
+    confirmation(false);
+    throw new Error("Please make sure all fields are filled in");
+  }
 
   // Creating new book object for input
   let book = new Book(
@@ -100,15 +123,17 @@ document.getElementById("addBookForm").addEventListener("submit", function (e) {
 
   // Adding book to local storage
   addBookToLocalStorage(book);
+
+  // Add confirmation
+  confirmation(true);
+
+  // Remove empty cart state
+  if (books.length === 1) {
+    // Hide 'Add to cart' message
+    let cartChildren = document.getElementById("cart").children;
+    // Removes cart icon
+    document.getElementById("cart").removeChild(cartChildren[1]);
+    // Removes cart icon description
+    document.getElementById("cart").removeChild(cartChildren[1]);
+  }
 });
-
-/*
-Problem: Add event handler to every delete button that deletes its row parent element.
-
-Methods/Ideas:
-- Add a class to each row/book instance which contains the event listner
-- 
-
-
-
-*/
